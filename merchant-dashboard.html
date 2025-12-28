@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard analytics untuk pedagang KantinQue">
+    <title>Dashboard Pedagang - KantinQue</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="merchant-dashboard.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-logo">
+                <i class="fas fa-utensils"></i>
+                <span>KantinQue</span>
+            </div>
+            <div class="nav-actions">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </a>
+                <a href="order-tracking.html" class="nav-link">
+                    <i class="fas fa-receipt"></i>
+                    <span>Pesanan</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Dashboard -->
+    <section class="section dashboard-section">
+        <div class="container-wide">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Dashboard Pedagang
+                </h2>
+                <p class="section-subtitle">Analisis penjualan dan transaksi</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon revenue">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Pendapatan</div>
+                        <div class="stat-value" id="totalRevenue">Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orders">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Pesanan</div>
+                        <div class="stat-value" id="totalOrders">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon items">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Menu Terlaris</div>
+                        <div class="stat-value" id="topItem">-</div>
+                        <div class="stat-meta" id="topItemCount">0 terjual</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon time">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Jam Ramai</div>
+                        <div class="stat-value" id="peakHour">-</div>
+                        <div class="stat-meta" id="peakHourCount">0 pesanan</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="dashboard-grid">
+                <!-- Best Selling Items -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-star"></i>
+                            Menu Terlaris
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="bestSellingChart" class="chart-container">
+                            <!-- Chart will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Peak Hours -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-chart-bar"></i>
+                            Jam Ramai Penjualan
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="peakHoursChart" class="chart-container">
+                            <!-- Chart will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>
+                        <i class="fas fa-history"></i>
+                        Riwayat Transaksi
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table id="transactionTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Waktu</th>
+                                    <th>Item</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionBody">
+                                <!-- Transactions will be rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>KantinQue</span>
+                </div>
+                <p class="footer-text">Platform pemesanan makanan & minuman dengan pembayaran QRIS</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KantinQue. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="merchant-dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Platform pemesanan makanan dan minuman KantinQue dengan pembayaran QRIS. Pesan makanan favorit Anda dengan mudah dan cepat.">
+    <meta name="keywords" content="kantin, pemesanan online, QRIS, makanan, minuman">
+    <title>KantinQue - Pesan Makanan & Minuman dengan QRIS</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-logo">
+                <i class="fas fa-utensils"></i>
+                <span>KantinQue</span>
+            </div>
+            <div class="nav-actions">
+                <a href="order-tracking.html" class="nav-link" id="orderTrackingLink">
+                    <i class="fas fa-receipt"></i>
+                    <span>Pesanan</span>
+                    <span class="order-badge" id="orderBadge">0</span>
+                </a>
+                <a href="merchant-dashboard.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <button class="btn-cart" id="btnCart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content container">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Pesan Makanan <br>
+                    <span class="gradient-text">Lebih Mudah</span> & Cepat
+                </h1>
+                <p class="hero-description">
+                    Pilih dari 6 kantin berbeda dengan menu spesialnya masing-masing. Bayar dengan QRIS, praktis dan
+                    aman!
+                </p>
+                <button class="btn btn-primary"
+                    onclick="document.getElementById('kantinSection').scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-rocket"></i>
+                    Pilih Kantin Sekarang
+                </button>
+            </div>
+            <div class="hero-image">
+                <div class="kantin-image-container">
+                    <img src="img/kantin bu cicik/Ayam Geprek.jpg" alt="Kantin" class="kantin-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pilih Kantin -->
+    <section class="section" id="kantinSection">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-store"></i>
+                    Pilih Kantin
+                </h2>
+                <p class="section-subtitle">6 Kantin dengan menu spesial masing-masing</p>
+            </div>
+            <div class="kantin-grid" id="kantinGrid">
+                <!-- Kantin akan di-render oleh JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section" id="menuSection" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-utensils"></i>
+                    Menu Kantin
+                </h2>
+                <p class="section-subtitle">Pilih menu favorit Anda</p>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu akan di-render oleh JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h3>
+                <button class="btn-close" id="btnCloseCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="cartItems">
+                    <!-- Cart items will be rendered here -->
+                </div>
+                <div class="cart-empty" id="cartEmpty">
+                    <i class="fas fa-shopping-basket"></i>
+                    <p>Keranjang masih kosong</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- Order Notes -->
+                <div class="order-notes-section">
+                    <label for="orderNotes">
+                        <i class="fas fa-sticky-note"></i>
+                        Catatan Pesanan (opsional):
+                    </label>
+                    <textarea id="orderNotes" placeholder="Contoh: Extra pedas, tanpa bawang" rows="2"></textarea>
+                </div>
+
+                <!-- Scheduling Section -->
+                <div class="scheduling-section">
+                    <label>
+                        <i class="fas fa-clock"></i>
+                        Waktu Pengambilan:
+                    </label>
+                    <div class="schedule-options">
+                        <button class="schedule-btn active" id="btnOrderNow" onclick="selectScheduleType('now')">
+                            <i class="fas fa-bolt"></i>
+                            Pesan Sekarang
+                        </button>
+                        <button class="schedule-btn" id="btnSchedule" onclick="selectScheduleType('schedule')">
+                            <i class="fas fa-calendar"></i>
+                            Jadwalkan
+                        </button>
+                    </div>
+                    <div class="schedule-picker" id="schedulePicker" style="display: none;">
+                        <div class="schedule-input-group">
+                            <label for="scheduleDate">Tanggal:</label>
+                            <input type="date" id="scheduleDate" />
+                        </div>
+                        <div class="schedule-input-group">
+                            <label for="scheduleTime">Jam:</label>
+                            <select id="scheduleTime">
+                                <option value="">Pilih Jam</option>
+                                <option value="07:00">07:00</option>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span class="total-price" id="totalPrice">Rp 0</span>
+                </div>
+                <button class="btn btn-primary btn-block" id="btnCheckout">
+                    <i class="fas fa-check-circle"></i>
+                    Lanjut ke Pembayaran
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QRIS Payment Modal -->
+    <div class="modal" id="qrisModal">
+        <div class="modal-overlay" id="qrisOverlay"></div>
+        <div class="modal-content qris-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-qrcode"></i> Pembayaran QRIS</h3>
+                <button class="btn-close" id="btnCloseQris">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="qris-info">
+                    <div class="order-summary" id="orderSummary">
+                        <!-- Order summary will be rendered here -->
+                    </div>
+
+                    <!-- Payment Method Selection -->
+                    <div class="payment-method-section">
+                        <h4><i class="fas fa-credit-card"></i> Pilih Metode Pembayaran:</h4>
+                        <div class="payment-methods-grid">
+                            <button class="payment-method-card active" data-method="qris"
+                                onclick="selectPaymentMethod('qris')">
+                                <i class="fas fa-qrcode"></i>
+                                <span>QRIS</span>
+                                <small>Semua E-Wallet</small>
+                            </button>
+                            <button class="payment-method-card" data-method="gopay"
+                                onclick="selectPaymentMethod('gopay')">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg"
+                                    alt="GoPay" class="payment-logo">
+                                <span>GoPay</span>
+                            </button>
+                            <button class="payment-method-card" data-method="ovo" onclick="selectPaymentMethod('ovo')">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg"
+                                    alt="OVO" class="payment-logo">
+                                <span>OVO</span>
+                            </button>
+                            <button class="payment-method-card" data-method="dana"
+                                onclick="selectPaymentMethod('dana')">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg"
+                                    alt="DANA" class="payment-logo">
+                                <span>DANA</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="qris-container">
+                        <div class="qris-code">
+                            <div class="qr-placeholder" id="qrPlaceholder">
+                                <i class="fas fa-qrcode"></i>
+                                <p>Scan QR Code untuk bayar</p>
+                            </div>
+                            <div id="qrcode"></div>
+                        </div>
+
+                        <div class="payment-instructions">
+                            <h4><i class="fas fa-info-circle"></i> Cara Pembayaran:</h4>
+                            <ol>
+                                <li>Buka aplikasi mobile banking atau e-wallet Anda</li>
+                                <li>Pilih menu Scan QRIS</li>
+                                <li>Arahkan kamera ke QR code di atas</li>
+                                <li>Konfirmasi pembayaran</li>
+                                <li>Tunggu notifikasi pembayaran berhasil</li>
+                            </ol>
+                        </div>
+
+                        <div class="payment-timer">
+                            <i class="fas fa-clock"></i>
+                            <span>Selesaikan pembayaran dalam: <strong id="countdown">05:00</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="payment-status" id="paymentStatus">
+                        <div class="status-pending">
+                            <div class="spinner"></div>
+                            <p>Menunggu pembayaran...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>KantinQue</span>
+                </div>
+                <p class="footer-text">Platform pemesanan makanan & minuman dengan pembayaran QRIS</p>
+                <div class="footer-payment">
+                    <span>Metode Pembayaran:</span>
+                    <div class="payment-methods">
+                        <i class="fas fa-qrcode"></i>
+                        <span>QRIS</span>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span>Hubungi Kami:</span>
+                    <a href="https://wa.me/6289681093158" target="_blank" class="whatsapp-contact">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+62 896-8109-3158</span>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KantinQue. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="qr-code-fix.js"></script>
+    <script src="app.js"></script>
+    <script src="debug.js"></script>
+</body>
+
+</html>
